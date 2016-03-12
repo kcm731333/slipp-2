@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.annotation.PostConstruct;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
@@ -37,8 +38,14 @@ public class UserDao extends JdbcDaoSupport {
 						);
 			}
 		};
-
-		return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		
+		try{
+			return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		}catch(EmptyResultDataAccessException e){
+			return null;
+		}
+		
+		
 	}
 
 	public void create(User user) {

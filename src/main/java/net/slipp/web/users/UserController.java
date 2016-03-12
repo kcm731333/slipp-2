@@ -58,7 +58,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/login")
-	public String login(@Valid Authenticate authenticate, BindingResult bindingResult){
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, Model model){
 		
 		if(bindingResult.hasErrors()){
 			return "users/login";
@@ -67,10 +67,20 @@ public class UserController {
 		User user = userDao.findById(authenticate.getUserId());
 		if(user == null){
 			//TODO 에러 처리 - 존재하지 않는 사용자입니다.
+			model.addAttribute("errorMessage", "존재하지 않은 사용자입니다.");
+			return "users/login";
+			
 		}
 		
+		/*
+		 *  여기에 하지 말고 객체에 넘겨줘서 처리 
 		if(!user.getPassword().equals(authenticate.getPassword())){
 			//TODO 에러처리 - 비번이틀리다.
+		}
+		*/
+		if(!user.matchPassword(authenticate)){
+			model.addAttribute("errorMessage", "비밀번호가 틀립니다.");
+			return "users/login";
 		}
 		
 		//TODO 세션에 사용자 정보 저장 
