@@ -54,6 +54,11 @@
 							<form:input path="email"/>
 						</div>
 					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn btn-primary">회원가입</button>
+						</div>
+					</div>
 				</form:form>
 				<%-- 
 				<form class="form-horizontal" action="/users" method="post">
