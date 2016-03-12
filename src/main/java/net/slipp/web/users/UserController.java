@@ -2,6 +2,7 @@ package net.slipp.web.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,12 +17,13 @@ public class UserController {
 	private UserDao userDao;
 	
 	@RequestMapping(value="/form")
-	public String form(){
+	public String form(Model model){
+		model.addAttribute("user", new User());
 		return "users/form";
 	}
 	
 	
-	@RequestMapping(value="/create" , method=RequestMethod.POST)
+	@RequestMapping(value="" , method=RequestMethod.POST)
 	public String create(User user){
 		System.out.println("User : "+user);
 		userDao.create(user);
