@@ -14,6 +14,10 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="/">Home</a></li>
+              <c:if test="${empty sessionScope.userId}">
+              	<li>111</li>
+              </c:if>
+              
               <c:choose>
               <c:when test="${not empty userId}">
               <li><a href="/users/logout">로그아웃</a></li>
