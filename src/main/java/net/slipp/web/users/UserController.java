@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -95,6 +96,50 @@ public class UserController {
 	
 		session.removeAttribute("userId");
 		return "redirect:/";
+	}
+	
+	
+	@RequestMapping(value="{userId}/form")
+	public String updateForm(@PathVariable("userId") String userId, Model model){
+		
+		if(userId == null){
+			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
+			
+		}
+		User user = userDao.findById(userId);
+		
+		model.addAttribute("user", user);
+		return "users/form";
+	}
+	
+	@RequestMapping(value="" , method=RequestMethod.PUT)
+	public String update(@Valid User user, BindingResult bindingResult, HttpSession session){
+		
+		if(bindingResult.hasErrors()){
+			System.out.println("Binding Result has error");
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for(ObjectError error : errors){
+				System.out.println("error : "+ error.getCode());
+			}
+			
+			return "users/form";
+		}
+		Object temp = session.getAttribute("userId");
+		if(temp == null){
+			throw new NullPointerException();
+		}
+		String userId = (String)temp;
+		
+		if(!user.matchUsreId(userId)){
+			throw new NullPointerException();
+		}
+		
+		System.out.println("User : "+user);
+		userDao.update(user);
+		System.out.println("DataBase + "+userDao.findById(user.getUserId()));
+		
+		return "redirect:/";
+		
 	}
 	
 }

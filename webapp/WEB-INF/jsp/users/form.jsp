@@ -23,18 +23,33 @@
 					<h1>${pageName}</h1>
 				</div>
 				
-				<c:set var="actionUrl" value="/users/create" />
-				<c:if test="${isUpdate}">
-				<c:set var="actionUrl" value="/users/update" />
-				</c:if>
+				<c:choose>
+				<c:when test="${empty user.userId }">
+					<c:set var="method" value="post" />
+				</c:when>
 				
-				<form:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="post">
+				<c:otherwise>
+					<c:set var="method" value="put" />
+				</c:otherwise>		
+				</c:choose>
+				
+				<form:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="${method }">
 					
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
+						<c:choose>
+						<c:when test="${empty user.userId }">
 							<form:input path="userId"/>
 							<form:errors path="userId" cssClass="error"/>
+						</c:when>
+						<c:otherwise>
+							${user.userId}
+							<form:hidden path="userId"/>
+						</c:otherwise>
+						</c:choose>
+						
+							
 						</div>
 					</div>	
 					<div class="control-group">
