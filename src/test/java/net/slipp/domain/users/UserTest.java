@@ -55,5 +55,13 @@ public class UserTest {
 		assertFalse(user.matchPassword(authenticate));
 		
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void updateWhenMisMatchUserId() throws Exception{
+		User user = new User("userId","passrowd","name","blue@tigrison.com");
+		User updateUser = new User("userI","passrowd","name","san@tigrison.com");
+		
+		User updatedUser = user.update(updateUser);
+	}
 
 }

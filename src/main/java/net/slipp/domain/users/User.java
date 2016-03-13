@@ -114,5 +114,14 @@ public class User {
 		}	
 		return this.userId.equals(userId);
 	}
+
+	public User update(User updateUser) {
+		
+		if(!matchUsreId(updateUser.userId)){
+			throw new IllegalArgumentException();
+		}
+		
+		return null;
+	}
 	
 }
