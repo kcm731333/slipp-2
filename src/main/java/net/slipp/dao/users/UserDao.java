@@ -15,8 +15,6 @@ import net.slipp.domain.users.User;
 
 public class UserDao extends JdbcDaoSupport {
 
-	//어디에 올라가
-	
 	@PostConstruct
 	public void initailize() {
 
@@ -34,12 +32,10 @@ public class UserDao extends JdbcDaoSupport {
 			
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				// TODO Auto-generated method stub
-				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("email"), rs.getString("name")
+				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email")
 						);
 			}
 		};
-
 		return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
 	}
 

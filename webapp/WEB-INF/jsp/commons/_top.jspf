@@ -21,7 +21,7 @@
               </c:when>
               <c:otherwise>
               <li><a href="/login.jsp">로그인</a></li>
-              <li><a href="/users/createForm">회원가입</a></li> 
+              <li><a href="/users/form">회원가입</a></li> 
               </c:otherwise>
               </c:choose>
             </ul>

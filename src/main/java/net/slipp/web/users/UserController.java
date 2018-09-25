@@ -1,5 +1,7 @@
 package net.slipp.web.users;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import net.slipp.domain.users.User;
 @RequestMapping("/users")
 public class UserController {
 
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
 	private UserDao userDao;
 	
@@ -20,13 +24,11 @@ public class UserController {
 		return "users/form";
 	}
 	
-	
 	@RequestMapping(value="/create" , method=RequestMethod.POST)
 	public String create(User user){
-		System.out.println("User : "+user);
+		log.debug("User : {}", user);
 		userDao.create(user);
-		System.out.println("DataBase + "+userDao.findById(user.getUserId()));
-		
+		log.debug("Database : {}", userDao.findById(user.getUserId()));
 		return "users/form";
 		
 	}
