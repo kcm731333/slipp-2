@@ -15,6 +15,8 @@ import net.slipp.domain.users.User;
 
 public class UserDao extends JdbcDaoSupport {
 
+	//어디에 올라가
+	
 	@PostConstruct
 	public void initailize() {
 
